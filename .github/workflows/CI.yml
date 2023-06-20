@@ -26,4 +26,14 @@ jobs:
         run: npm run test -- --coverage
         env: 
           CI: true
+          
+      - name: Deploy Docker
+        env: 
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run:
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+          docker build . -t chagasbarros/react-app:v1
+          docker push chagasbarros/react-app:v1
+      
         
